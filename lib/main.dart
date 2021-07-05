@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: Locale('ru'),
       debugShowCheckedModeBanner: false,
       title: 'Microgreen recipes',
       theme: ThemeData(primarySwatch: Colors.blue),

@@ -16,6 +16,8 @@ dependencies:
   http:
   webview_flutter:
   url_launcher:
+  translator: ^0.1.7
+  
 
 dev_dependencies:
   flutter_test:
