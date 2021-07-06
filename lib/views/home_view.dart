@@ -1,6 +1,5 @@
-import 'dart:io';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 //import 'package:translator/translator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +15,17 @@ class _HomeViewState extends State<HomeView> {
   // String appliationID = "62e70664";
   // String applicationKey = "3be0dab1b58cb6aa3e1c1fbb1cc9e8df";
 
-  getRecipes(String query) async{
-    var url =
-        Uri.parse("https://api.edamam.com/search?q=$query&app_id=62e70664&app_key=3be0dab1b58cb6aa3e1c1fbb1cc9e8df");
+  getRecipes(String query) async {
+    var url = Uri.parse(
+        "https://api.edamam.com/search?q=$query&app_id=62e70664&app_key=3be0dab1b58cb6aa3e1c1fbb1cc9e8df");
 
     http.Response response = await http.get(url);
-    print("$response this is response");
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+    jsonData["hits"].forEach((element) {
+      print(element.toString());
+    });
+    //print("$response this is response");
   }
 
   @override
@@ -94,8 +98,8 @@ class _HomeViewState extends State<HomeView> {
                           controller: textEditingController,
                           decoration: InputDecoration(
                             hintText: "Введите ингридиенты",
-                            hintStyle:
-                                TextStyle(fontSize: 18, 
+                            hintStyle: TextStyle(
+                                fontSize: 18,
                                 color: Colors.white.withOpacity(0.5)),
                           ),
                           style: TextStyle(fontSize: 18, color: Colors.white),
