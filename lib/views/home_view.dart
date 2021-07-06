@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 //import 'package:translator/translator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:microgreen_recipes/models/recipe_model.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -10,22 +11,29 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  List<RecipeModel> recipes = [];
+
   TextEditingController textEditingController = new TextEditingController();
 
-  // String appliationID = "62e70664";
-  // String applicationKey = "3be0dab1b58cb6aa3e1c1fbb1cc9e8df";
+  String appliationID = "62e70664";
+  String applicationKey = "3be0dab1b58cb6aa3e1c1fbb1cc9e8df";
 
   getRecipes(String query) async {
     var url = Uri.parse(
-        "https://api.edamam.com/search?q=$query&app_id=62e70664&app_key=3be0dab1b58cb6aa3e1c1fbb1cc9e8df");
+        "https://api.edamam.com/search?q=microgreen&app_id=$appliationID&app_key=$applicationKey");
 
     http.Response response = await http.get(url);
     Map<String, dynamic> jsonData = jsonDecode(response.body);
 
     jsonData["hits"].forEach((element) {
-      print(element.toString());
+      //print(element.toString());
+
+      RecipeModel recipeModel = new RecipeModel();
+      recipeModel = RecipeModel.fromMap(element["recipe"]);
+      recipes.add(recipeModel);
     });
-    //print("$response this is response");
+
+    print("${recipes.toString()}");
   }
 
   @override
@@ -129,6 +137,29 @@ class _HomeViewState extends State<HomeView> {
                 )
               ],
             ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class RecipeGrid extends StatelessWidget {
+  // const RecipeGrid({Key? key}) : super(key: key);
+  String? url, source, title, postUrl;
+  RecipeGrid({this.url, this.source, this.title, this.postUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Image.network(url!),
+          Container(
+            child: Column(
+              children: [
+                
+              ],),
           )
         ],
       ),
