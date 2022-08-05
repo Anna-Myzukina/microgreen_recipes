@@ -16,7 +16,7 @@ class _HomeViewState extends State<HomeView> {
   TextEditingController textEditingController = new TextEditingController();
 
   String appliationID = "62e70664";
-  String applicationKey = "3be0dab1b58cb6aa3e1c1fbb1cc9e8df";
+  String applicationKey = "";
 
   getRecipes(String query) async {
     var url = Uri.parse(
